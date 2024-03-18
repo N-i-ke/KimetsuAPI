@@ -1,8 +1,14 @@
 document.querySelectorAll('input[name="apiType"]').forEach((radio) => {
   radio.addEventListener("change", function () {
+    showLoading(true);
     fetchAndDisplayData(this.value);
   });
 });
+
+function showLoading(isLoading) {
+  const loadingDiv = document.getElementById("loading");
+  loadingDiv.style.display = isLoading ? "block" : "none";
+}
 
 function fetchAndDisplayData(apiType) {
   let endpoint;
@@ -47,5 +53,8 @@ function fetchAndDisplayData(apiType) {
     })
     .catch((error) => {
       console.error("There was a problem with your fetch operation:", error);
+    })
+    .finally(() => {
+      showLoading(false);
     });
 }
